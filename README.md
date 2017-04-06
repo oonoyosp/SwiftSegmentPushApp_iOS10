@@ -199,7 +199,7 @@ __[【iOS】プッシュ通知の受信に必要な証明書の作り方(開発�
 #### まとめると
 
 * 上のようにinstallationの絞り込み設定をしてプッシュ通知を作成することで、特定のグループや個人に対してプッシュ通知を送ることができます！！
- * 「ｆａｖｏｒｉｔｅ」が「music」のユーザーにだけ配信や、ある特定のユーザーにだけ配信ということも出来ます。
+ * 「favorite」が「music」のユーザーにだけ配信や、ある特定のユーザーにだけ配信ということも出来ます。
 * 様々な絞り込みを試してみましょう！
 
 
@@ -216,45 +216,41 @@ __[【iOS】プッシュ通知の受信に必要な証明書の作り方(開発�
  * デバイストークンの要求はiOSのバージョンによってコードが異なります
 　
 ```swift
-//
-//  AppDelegate.swift
-//  SwiftPushApp
-//
-//  Created by Yuko Sunagawa on 2016/10/03.
-//  Copyright © 2016年 NIFTY Corporation. All rights reserved.
-//
-
 import UIKit
+import UserNotifications
 import NCMB
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    //********** APIキーの設定 **********
-    let applicationkey = "YOUR_NCMB_APPLICATIONKEY"
-    let clientkey      = "YOUR_NCMB_CLIENTKEY"
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        //********** SDKの初期化 **********
-        NCMB.setApplicationKey(applicationkey, clientKey: clientkey)
+        NCMB.setApplicationKey("YOUR_APPLICATION_KEY", clientKey: "YOUR_CLIENT_KEY")
         
-        /// デバイストークンの要求
-        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
-            /** iOS8以上 **/
-             //通知のタイプを設定したsettingを用意
-            let type : UIUserNotificationType = [.Alert, .Badge, .Sound]
-            let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
+        if #available(iOS 10.0, *){
+            //iOS10以上での、DeviceToken要求方法
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert, .badge, .sound]) {granted, error in
+                if error != nil {
+                    return
+                }
+                if granted {
+                    //通知を許可にした場合DeviceTokenを要求
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            }
+        } else {
+            //iOS10未満での、DeviceToken要求方法
+
+            //通知のタイプを設定したsettingを用意
+            let setting = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             //通知のタイプを設定
             application.registerUserNotificationSettings(setting)
             //DevoceTokenを要求
             application.registerForRemoteNotifications()
-        }else{
-            /** iOS8未満 **/
-            let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
-            UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
         }
 
         return true
@@ -262,61 +258,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // デバイストークンが取得されたら呼び出されるメソッド
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
+
         // 端末情報を扱うNCMBInstallationのインスタンスを作成
         let installation = NCMBInstallation.currentInstallation()
-        // デバイストークンの設定
+        // Device Tokenを設定
         installation.setDeviceTokenFromData(deviceToken)
         // 端末情報をデータストアに登録
         installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-            if (error != nil){
-                // 端末情報の登録に失敗した時の処理
+            if error == nil {
+                // 端末情報の登録に成功した時の処理
                 
             }else{
-                // 端末情報の登録に成功した時の処理
+                // 端末情報の登録に失敗した時の処理
                 
             }
         }
     }
-
 }
 ```
 
 #### installation取得ロジック
 
 * `ViewController.swift`の`getInstallation`メソッド内でinstallationクラスを生成しています
-*  `.allkey()`で、フィールドを全件取得できます
+* `.allkey()`で、フィールドを全件取得できます
 * `.objectForKey()`で、指定したフィールドの中身を取り出すことができます
 
 ```Swift
-//installationの生成
-        let installation = NCMBInstallation.currentInstallation()
-        
-        //ローカルのinstallationをfetchして更新
-        installation.fetchInBackgroundWithBlock { (error: NSError!) -> Void in
-            
-            if installation != nil{
-              //取得成功時の処理
-               print("取得成功:\(installation)")
-             }
+    
+    let installation = NCMBInstallation.current()
+
+    //ローカルのinstallationをfetchして更新
+    installation?.fetchInBackground { error in
+        if error == nil {
+            //端末情報の取得が成功した場合の処理
+            print("取得に成功:\(installation)")
+            let favorite = installation?.object(forKey: "favorite")
+        } else {
+            //端末情報の取得が失敗した場合の処理
+
         }
+    }
 ```
 
 #### installation更新ロジック
+
 * `postInstallation`メソッド内で行います。
 * `.setObject()`で更新内容とフィールド名を指定し、`.saveInBackgroundWithBlock`で更新します
+
 ```Swift
-        
-        installation!.saveInBackgroundWithBlock({( error: NSError!)-> Void in
-            if error != nil{
-                //installation更新失敗時の処理
-            } else {
-                //insitallation更新成功時の処理
-                print("installation更新に成功しました")
-            }
-         })
+
+    let installation = NCMBInstallation.current()
+
+    installation.setObject(更新内容, forKey: フィールド名)
+
+    installation.saveInBackground { error in
+        if error == nil {
+            //端末情報の更新が成功した場合の処理
+        } else {
+            //端末情報の更新が失敗した場合の処理
+        }
+    }
 ```
+
 * 更新後は自動でviewのリロードが実行され、更新内容が書き換わります
 
 
 ## 参考
-* 同じ内容の【Objective-C】版も作成しておりますのでお待ちください
+* 同じ内容の【Objective-C】版もご用意しています
+ * [Objective-C版](https://github.com/NIFTYCloud-mbaas/ObjcSegmentPushApp)
