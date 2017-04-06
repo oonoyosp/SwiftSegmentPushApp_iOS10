@@ -12,6 +12,9 @@
 		9D34A7791E92174C00D3F30E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D34A7771E92174C00D3F30E /* Main.storyboard */; };
 		9D34A77B1E92174C00D3F30E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D34A77A1E92174C00D3F30E /* Assets.xcassets */; };
 		9D34A77E1E92174C00D3F30E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D34A77C1E92174C00D3F30E /* LaunchScreen.storyboard */; };
+		9D99C6AD1E9374880006298A /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99C6AC1E9374880006298A /* AppSetting.swift */; };
+		9D99C6AF1E93798A0006298A /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99C6AE1E93798A0006298A /* CustomCell.swift */; };
+		9D99C6B21E937E570006298A /* ConvertString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99C6B11E937E570006298A /* ConvertString.swift */; };
 		E95E321D3E5543577639D921 /* Pods_SwiftSegmentPushApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9EE8E206FA15BBF4B49CA17 /* Pods_SwiftSegmentPushApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +28,9 @@
 		9D34A77D1E92174C00D3F30E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D34A77F1E92174C00D3F30E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D34A7851E92177800D3F30E /* SwiftSegmentPushApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftSegmentPushApp.entitlements; sourceTree = "<group>"; };
+		9D99C6AC1E9374880006298A /* AppSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSetting.swift; sourceTree = "<group>"; };
+		9D99C6AE1E93798A0006298A /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		9D99C6B11E937E570006298A /* ConvertString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertString.swift; sourceTree = "<group>"; };
 		C1D8EAA5E82C4E747C70FDE4 /* Pods-SwiftSegmentPushApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftSegmentPushApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftSegmentPushApp/Pods-SwiftSegmentPushApp.debug.xcconfig"; sourceTree = "<group>"; };
 		E9EE8E206FA15BBF4B49CA17 /* Pods_SwiftSegmentPushApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftSegmentPushApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -73,12 +79,23 @@
 				9D34A7851E92177800D3F30E /* SwiftSegmentPushApp.entitlements */,
 				9D34A7731E92174C00D3F30E /* AppDelegate.swift */,
 				9D34A7751E92174C00D3F30E /* ViewController.swift */,
+				9D99C6AE1E93798A0006298A /* CustomCell.swift */,
 				9D34A7771E92174C00D3F30E /* Main.storyboard */,
 				9D34A77A1E92174C00D3F30E /* Assets.xcassets */,
 				9D34A77C1E92174C00D3F30E /* LaunchScreen.storyboard */,
 				9D34A77F1E92174C00D3F30E /* Info.plist */,
+				9D99C6AC1E9374880006298A /* AppSetting.swift */,
+				9D99C6B01E937D340006298A /* Utilities */,
 			);
 			path = SwiftSegmentPushApp;
+			sourceTree = "<group>";
+		};
+		9D99C6B01E937D340006298A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9D99C6B11E937E570006298A /* ConvertString.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		C9C195793B0518676429EB5D /* Pods */ = {
@@ -218,8 +235,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D99C6B21E937E570006298A /* ConvertString.swift in Sources */,
 				9D34A7761E92174C00D3F30E /* ViewController.swift in Sources */,
 				9D34A7741E92174C00D3F30E /* AppDelegate.swift in Sources */,
+				9D99C6AF1E93798A0006298A /* CustomCell.swift in Sources */,
+				9D99C6AD1E9374880006298A /* AppSetting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +407,7 @@
 				9D34A7841E92174C00D3F30E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
