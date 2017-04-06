@@ -264,7 +264,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Device Tokenを設定
         installation.setDeviceTokenFromData(deviceToken)
         // 端末情報をデータストアに登録
-        installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
+        installation.saveInBackground { error in
             if error == nil {
                 // 端末情報の登録に成功した時の処理
                 
@@ -325,4 +325,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 ## 参考
 * 同じ内容の【Objective-C】版もご用意しています
- * [Objective-C版](https://github.com/NIFTYCloud-mbaas/ObjcSegmentPushApp)
+ * [Objective-C版](https://github.com/NIFTYCloud-mbaas/ObjcSegmentPushApp_iOS10)
