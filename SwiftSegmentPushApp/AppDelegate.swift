@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Device Tokenを設定
         installation.setDeviceTokenFrom(deviceToken)
         // 端末情報をデータストアに登録
-        installation.saveInBackground { (error) in
+        installation.saveInBackground { error in
             // 登録後ViewControllerのtableViewを更新する
             let viewController = self.window?.rootViewController as! ViewController
             viewController.getInstallation()

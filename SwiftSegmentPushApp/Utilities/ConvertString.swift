@@ -12,16 +12,16 @@ class ConvertString: NSObject {
 
     /**
      installationのvalueの値をNSStringクラスに変換する
-     @param anyObject NSArray or NSDictionary or NSString オブジェクト
+     @param anyObject Array or Dictionary or String オブジェクト
      @return 文字列
      */
     internal static func convertNSStringToAnyObject(_ anyObject:AnyObject) -> String {
         
         if let arrayObject = anyObject as? [String] {
-            // NSArrayをNSStringに変換する
+            // ArrayをStringに変換する
             return arrayObject.joined(separator: ",")
         } else if let dicObject = anyObject as? Dictionary<String, AnyObject> {
-            // NSDictionaryをNSStringに変換する
+            // DictionaryをStringに変換する
             do {
                 let data = try JSONSerialization.data(withJSONObject:dicObject, options: JSONSerialization.WritingOptions.init(rawValue: 2))
                 let jsonStr:NSString = NSString.init(data: data, encoding: String.Encoding.utf8.rawValue)!

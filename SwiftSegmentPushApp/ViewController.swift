@@ -209,8 +209,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // objectIdが取得できている場合はtableViewの表示を更新する
         if installation?.object(forKey: "objectId") != nil {
             //端末情報をデータストアから取得
-            installation?.fetchInBackground({ (error) in
-                if error != nil {
+            installation?.fetchInBackground({ error in
+                if error == nil {
                     //端末情報の取得が成功した場合の処理
                     print("取得に成功")
                     self.installation = installation
@@ -259,8 +259,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         // installationを更新
-        installation.saveInBackground { (error) in
-            if error != nil {
+        installation.saveInBackground { error in
+            if error == nil {
                 self.statusLabel.text = "保存に成功しました"
                 // tableViewの内容を更新
                 self.getInstallation()

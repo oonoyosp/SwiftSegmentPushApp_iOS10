@@ -87,7 +87,7 @@ class CustomCell: UITableViewCell {
         }
         
         self.addSubview(keyLabel)
-        self.addSubview(valueLabel)
+        self.addSubview(valueField)
         
         self.setNeedsLayout()
     }
